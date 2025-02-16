@@ -1,0 +1,23 @@
+model:
+  name: "food_recommender"
+  version: "1.0"
+
+training:
+  tfidf_max_features: 5000
+  xgboost_params:
+    objective: "rank:pairwise"
+    learning_rate: 0.1
+    max_depth: 6
+    n_estimators: 100
+  n_clusters: 10
+  similarity_weight: 0.6
+  rating_weight: 0.25
+  recency_weight: 0.15
+
+paths:
+  data: "data/reviews.csv"
+  model_artifacts: "artifacts/"
+  logs: "logs/"
+
+
+
