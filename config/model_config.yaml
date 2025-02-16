@@ -18,6 +18,3 @@ paths:
   data: "data/reviews.csv"
   model_artifacts: "artifacts/"
   logs: "logs/"
-
-
-
