@@ -6,6 +6,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sklearn.metrics.pairwise import cosine_similarity
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 # Load configuration
 with open("config/model_config.yaml", "r") as f:
@@ -13,6 +16,13 @@ with open("config/model_config.yaml", "r") as f:
 
 # Initialize FastAPI app
 app = FastAPI(title="Food Recommendation API")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change "*" to specific domains for security
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class RecommendationRequest(BaseModel):
     query: str
@@ -37,7 +47,6 @@ def health():
 
 @app.post("/recommend")
 def recommend(request: RecommendationRequest):
-    # Filter by city if provided
     df_filtered = df_global.copy()
     if request.city:
         df_filtered = df_filtered[df_filtered['city'].str.lower() == request.city.lower()]
